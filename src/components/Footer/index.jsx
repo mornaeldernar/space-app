@@ -35,17 +35,17 @@ const Footer = () => {
         <IconoContainer>
             <li>
                 <a href="#">
-                    <img src="/img/redes/facebook.png" alt="" />
+                    <img src="/img/redes/facebook.svg" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="/img/redes/twitter.png" alt="" />
+                    <img src="/img/redes/twitter.svg" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="/img/redes/instagram.png" alt="" />
+                    <img src="/img/redes/instagram.svg" alt="" />
                 </a>
             </li>
         </IconoContainer>
