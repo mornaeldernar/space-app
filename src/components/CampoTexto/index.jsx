@@ -1,5 +1,7 @@
+import { useContext, useRef } from "react";
 import {styled} from "styled-components";
 import search from '../../assets/search.png';
+import { GlobalContext } from "../../context/GlobalContext";
 
 const DivEstilizada = styled.div`
     position: relative;
@@ -27,10 +29,15 @@ const LupaImg = styled.img`
     height: 38px;
 `;
 
-const CampoTexto = ({setFiltro}) => {
+const CampoTexto = () => {
+    const cajaConsulta = useRef(null);
+    const {dispatch} = useContext(GlobalContext);
+    
     return (<DivEstilizada>
-        <InputEstilizado placeholder="¿Qué estas buscando?" onChange={(evento) => { setFiltro(evento.target.value)}} type="text"/>
-        <LupaImg src={search} alt="Buscar"/>
+        <InputEstilizado ref={cajaConsulta} placeholder="¿Qué estas buscando?"  type="text"/>
+        <LupaImg src={search} alt="Buscar" onClick={() => {
+            dispatch({type:'SET_CONSULTA', payload: cajaConsulta.current.value})
+        }}/>
     </DivEstilizada>)
 }
 export default CampoTexto;

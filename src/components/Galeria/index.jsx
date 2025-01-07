@@ -3,6 +3,9 @@ import Populares from './Populares';
 import Titulo from '../Titulo';
 import styled from 'styled-components';
 import Imagen from './Imagen';
+import { useContext } from 'react';
+import Cargando from '../Cargando';
+import { GlobalContext } from '../../context/GlobalContext';
 
 
 const GaleriaContainer = styled.div`
@@ -18,26 +21,38 @@ const ImagenContainer = styled.section`
     gap: 24px;
 `
 
-const Galeria = ({fotos = [], setTag, alSeleccionarFoto, alAlternarFavorito }) => {
-    return (<>
-        <Tags setTag={setTag} />
-        <GaleriaContainer>
-            <SeccionFluida>
-                <Titulo>Navegue por la galería</Titulo>
-                <ImagenContainer>
-                {
-                    fotos.map((foto) => {
-                        return <Imagen 
-                        alAlternarFavorito={alAlternarFavorito}
-                        alSolicitarZoom={alSeleccionarFoto}
-                        foto={foto} 
-                        key={foto.id}/>
-                    })
-                }
-                </ImagenContainer>
-            </SeccionFluida>
-            <Populares/>
-        </GaleriaContainer>
-    </>)
+const Galeria = () => {
+
+    //const { consulta, fotosDeGaleria,setFotoSeleccionada,alAlternarFavorito} = useContext(GlobalContext);
+    const { state } = useContext(GlobalContext);
+    
+    return (
+        state.fotosDeGaleria.length == 0 ?
+            <Cargando></Cargando> :
+            <>
+                <Tags />
+                <GaleriaContainer>
+                    <SeccionFluida>
+                        <Titulo>Navegue por la galería</Titulo>
+                        <ImagenContainer>
+                            {
+                                state.fotosDeGaleria
+                                    .filter(foto => {
+                                        return state.consulta == '' || foto.titulo.toLocaleLowerCase()
+                                            .normalize("NFD").replace(/\p{Diacritic}/gu, "").
+                                            includes(state.consulta.toLocaleLowerCase()
+                                                .normalize("NFD").replace(/\p{Diacritic}/gu, ""))
+                                    })
+                                    .map((foto) => {
+                                        return <Imagen
+                                            foto={foto}
+                                            key={foto.id} />
+                                    })
+                            }
+                        </ImagenContainer>
+                    </SeccionFluida>
+                    <Populares />
+                </GaleriaContainer>
+            </>)
 }
 export default Galeria;

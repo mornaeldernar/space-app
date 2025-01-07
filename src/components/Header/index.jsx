@@ -9,12 +9,10 @@ const HeaderEstilizado = styled.header`
         width: 212px;
     }
 `;
-const Header = ({filtro,setFiltro}) => {
+const Header = () => {
     return (<HeaderEstilizado>
         <img src="img/logo.png" alt="Logo de Space App" className="logo"/>
-        <CampoTexto 
-            setFiltro={setFiltro}
-        />
+        <CampoTexto/>
     </HeaderEstilizado>);
 }
 export default Header;
